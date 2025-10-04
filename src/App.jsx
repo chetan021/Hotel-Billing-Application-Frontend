@@ -9,6 +9,7 @@ import Reservations from "./Components/Reservations";
 import Login from "./Components/Login";
 import ProtectedRoute from "./Components/ProtectedRoute";
 import Register from "./Components/Register";
+import Invoice from "./Components/Invoice";
 
 const PageWrapper = ({ children }) => (
   <motion.div
@@ -38,9 +39,12 @@ function AppRoutes({ isAuthenticated, setIsAuthenticated, handleLogout }) {
           <Link to="/reservations" className="hover:text-yellow-300 transition duration-300">
             Reservations
           </Link>
-          <Link to="/register">Register</Link>
-{/* <Link to="/login">Login</Link> */}
-
+          <Link to="/register" className="hover:text-yellow-300 transition duration-300">
+            Register
+          </Link>
+          <Link to="/invoices" className="hover:text-yellow-300 transition duration-300">
+            Invoices
+          </Link>
         </div>
         <div>
           {isAuthenticated ? (
@@ -113,7 +117,18 @@ function AppRoutes({ isAuthenticated, setIsAuthenticated, handleLogout }) {
               }
             />
             <Route path="/register" element={<Register />} />
-{/* <Route path="/login" element={<Login />} /> */}
+            <Route
+              path="/invoices"
+              element={
+                <PageWrapper>
+                  <ProtectedRoute isAuthenticated={isAuthenticated}>
+                    <Invoice />
+                  </ProtectedRoute>
+                </PageWrapper>
+              }
+            />
+
+            {/* <Route path="/login" element={<Login />} /> */}
 
           </Routes>
         </AnimatePresence>
