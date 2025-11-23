@@ -1,0 +1,6 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="index.html" type="JavascriptDebugType" nameIsGenerated="true" uri="http://localhost:63342/Hotel-Billing-Application-Frontend/index.html" useBuiltInWebServerPort="true">
+    <mapping url="http://localhost:63342/Hotel-Billing-Application-Frontend" local-file="$PROJECT_DIR$" />
+    <method v="2" />
+  </configuration>
+</component>
