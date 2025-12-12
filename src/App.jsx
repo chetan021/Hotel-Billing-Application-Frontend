@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Toaster } from "react-hot-toast";
 import axios from "axios";
 
+// Import all components
 import Guest from "./Components/Guest";
 import RoomsUI from "./Components/RoomsUI";
 import AssignRoom from "./Components/AssignRoom";
@@ -12,6 +13,9 @@ import Login from "./Components/Login";
 import ProtectedRoute from "./Components/ProtectedRoute";
 import Register from "./Components/Register";
 import Invoice from "./Components/Invoice";
+import Users from "./Components/Users";
+import UserProfile from "./Components/UserProfile";
+import ChangePassword from "./Components/ChangePassword";
 
 // Configure API Base URL
 export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:8080/api";
@@ -56,7 +60,7 @@ function AppRoutes({ isAuthenticated, setIsAuthenticated, handleLogout, user }) 
             {/* Navigation Bar */}
             {isAuthenticated && (
                 <nav className="bg-black bg-opacity-30 backdrop-blur-md p-4 flex justify-between items-center shadow-md sticky top-0 z-50">
-                    <div className="flex space-x-6 text-lg font-semibold">
+                    <div className="flex space-x-6 text-lg font-semibold flex-wrap">
                         <Link
                             to="/guests"
                             className="hover:text-yellow-300 transition duration-300"
@@ -81,12 +85,49 @@ function AppRoutes({ isAuthenticated, setIsAuthenticated, handleLogout, user }) 
                         >
                             Invoices
                         </Link>
+
+                        {/* Admin Only Links */}
+                        {user?.role === "ADMIN" && (
+                            <Link
+                                to="/users"
+                                className="hover:text-red-300 transition duration-300 font-bold"
+                                title="User Management - Admin Only"
+                            >
+                                👤 Users
+                            </Link>
+                        )}
+
+                        {/* User Profile Links */}
+                        <Link
+                            to="/profile"
+                            className="hover:text-blue-300 transition duration-300"
+                            title="Your Profile"
+                        >
+                            Profile
+                        </Link>
+                        <Link
+                            to="/change-password"
+                            className="hover:text-green-300 transition duration-300"
+                            title="Change Password"
+                        >
+                            ⚙️ Settings
+                        </Link>
                     </div>
+
                     <div className="flex items-center space-x-4">
                         {user && (
-                            <span className="text-yellow-300 text-sm">
+                            <div className="flex items-center space-x-2">
+            <span className="text-yellow-300 text-sm">
                 Welcome, {user.name || user.email}
-              </span>
+            </span>
+                                {user.role && (
+                                    <span className={`text-xs px-2 py-1 rounded ${
+                                        user.role === "ADMIN" ? "bg-red-600" : "bg-blue-600"
+                                    }`}>
+                    {user.role}
+                </span>
+                                )}
+                            </div>
                         )}
                         <button
                             onClick={handleLogout}
@@ -95,6 +136,7 @@ function AppRoutes({ isAuthenticated, setIsAuthenticated, handleLogout, user }) 
                             Logout
                         </button>
                     </div>
+
                 </nav>
             )}
 
@@ -128,7 +170,7 @@ function AppRoutes({ isAuthenticated, setIsAuthenticated, handleLogout, user }) 
                             }
                         />
 
-                        {/* Protected Routes */}
+                        {/* Protected Routes - Hotel Management */}
                         <Route
                             path="/guests"
                             element={
@@ -184,7 +226,48 @@ function AppRoutes({ isAuthenticated, setIsAuthenticated, handleLogout, user }) 
                             }
                         />
 
-                        {/* Default Route */}
+                        {/* Protected Routes - User Management */}
+
+                        {/* User Management Route - Admin Only */}
+                        <Route
+                            path="/users"
+                            element={
+                                <PageWrapper>
+                                    <ProtectedRoute
+                                        isAuthenticated={isAuthenticated}
+                                        requiredRole="ADMIN"
+                                    >
+                                        <Users />
+                                    </ProtectedRoute>
+                                </PageWrapper>
+                            }
+                        />
+
+                        {/* User Profile Route - All Authenticated Users */}
+                        <Route
+                            path="/profile"
+                            element={
+                                <PageWrapper>
+                                    <ProtectedRoute isAuthenticated={isAuthenticated}>
+                                        <UserProfile />
+                                    </ProtectedRoute>
+                                </PageWrapper>
+                            }
+                        />
+
+                        {/* Change Password Route - All Authenticated Users */}
+                        <Route
+                            path="/change-password"
+                            element={
+                                <PageWrapper>
+                                    <ProtectedRoute isAuthenticated={isAuthenticated}>
+                                        <ChangePassword />
+                                    </ProtectedRoute>
+                                </PageWrapper>
+                            }
+                        />
+
+                        {/* Default Routes */}
                         <Route
                             path="/"
                             element={<Navigate to={isAuthenticated ? "/guests" : "/login"} replace />}
