@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { toast } from "react-hot-toast";
-import api from "../api/axios";
+import api from "../services/axios";
 
 function Reservations() {
     const [reservations, setReservations] = useState([]);

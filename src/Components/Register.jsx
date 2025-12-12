@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import api from "../api/axios"; // axios instance with JWT interceptor
+import api from "../services/axios"; // axios instance with JWT interceptor
 
 export default function Register() {
   const navigate = useNavigate();

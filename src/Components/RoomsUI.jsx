@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import { toast } from "react-hot-toast";
 import { motion, AnimatePresence } from "framer-motion";
-import api from "../api/axios";
+import api from "../services/axios";
 
 export default function RoomsUI() {
     const [rooms, setRooms] = useState([]);

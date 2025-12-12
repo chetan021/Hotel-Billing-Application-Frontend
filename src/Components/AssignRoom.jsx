@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import { motion } from "framer-motion";
-import api from "../api/axios";
+import api from "../services/axios";
 
 export default function AssignRoom() {
     const { guestId } = useParams();

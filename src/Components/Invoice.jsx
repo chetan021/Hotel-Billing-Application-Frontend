@@ -1,7 +1,7 @@
 
 import { useState, useEffect } from "react";
 import { toast } from "react-hot-toast";
-import api from "../api/axios"; // ✅ import axios instance with JWT & baseURL
+import api from "../services/axios"; // ✅ import axios instance with JWT & baseURL
 
 export default function InvoiceUI() {
   const [invoices, setInvoices] = useState([]);
@@ -16,7 +16,7 @@ export default function InvoiceUI() {
   useEffect(() => {
     const loadInvoices = async () => {
       try {
-        const res = await api.get("/invoices"); // baseURL handles /api
+        const res = await api.get("/invoices"); // baseURL handles /services
         setInvoices(res.data);
       } catch (err) {
         console.error("Error fetching invoices", err);

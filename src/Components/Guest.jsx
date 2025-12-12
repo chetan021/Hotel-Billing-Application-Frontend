@@ -1,7 +1,7 @@
 // src/Components/Guest.jsx (IMPROVED)
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import api from "../api/axios";
+import api from "../services/axios";
 import { motion, AnimatePresence } from "framer-motion";
 import { toast } from "react-hot-toast";
 
